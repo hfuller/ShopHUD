@@ -10,35 +10,46 @@ class pyscope :
     "Ininitializes a new pygame screen using the framebuffer"
     # Based on "Python GUI in Linux frame buffer"
     # http://www.karoltomala.com/blog/?p=679
+    
+    found = False
+    
+    #first try X    
     disp_no = os.getenv("DISPLAY")
     if disp_no:
       print "I'm running under X display = {0}".format(disp_no)
+      found = True 
+      try:
+        pygame.display.init()
+      except pygame.error:
+        print 'X failed.'
+        #continue
+        
 
     # Check which frame buffer drivers are available
     # Start with fbcon since directfb hangs with composite output
     drivers = ['fbcon', 'svgalib', 'directfb']
-    found = False
     for driver in drivers:
-      # Make sure that SDL_VIDEODRIVER is set
-      print "Trying" + driver
-      if not os.getenv('SDL_VIDEODRIVER'):
-        os.putenv('SDL_VIDEODRIVER', driver)
-      try:
-        pygame.display.init()
-      except pygame.error:
-        print 'Driver: {0} failed.'.format(driver)
-        continue
-      found = True
-      print "Using driver " + driver
+      if not found: #only try this if we don't already have a dpy
+        # Make sure that SDL_VIDEODRIVER is set
+        print "Trying" + driver
+        if not os.getenv('SDL_VIDEODRIVER'):
+          os.putenv('SDL_VIDEODRIVER', driver)
+        try:
+          pygame.display.init()
+        except pygame.error:
+          print 'Driver: {0} failed.'.format(driver)
+          continue
+        found = True
+        print "Using driver " + driver
 
-      break
+        break
 
     if not found:
       raise Exception('No suitable video driver found!')
 
     
     size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
-    print "Framebuffer size: %d x %d" % (size[0], size[1])
+    print "Output dpy size: %d x %d" % (size[0], size[1])
     self.screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
     # Clear the screen to start
     self.screen.fill((0, 0, 0))
