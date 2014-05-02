@@ -29,7 +29,7 @@ class pyscope :
 
     # Check which frame buffer drivers are available
     # Start with fbcon since directfb hangs with composite output
-    drivers = ['fbcon', 'svgalib', 'directfb']
+    drivers = ['directfb', 'svgalib', 'fbcon']
     for driver in drivers:
       if not found: #only try this if we don't already have a dpy
         # Make sure that SDL_VIDEODRIVER is set
@@ -59,6 +59,9 @@ class pyscope :
     pygame.font.init()
     # Render the screen
     pygame.display.update()
+    
+    #hide mouse
+    pygame.mouse.set_visible(False)
    
   def __del__(self):
     "Destructor to make sure pygame shuts down, etc."

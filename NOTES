@@ -1,0 +1,2 @@
+Possible way to power save:
+setterm -powersave powerdown -powerdown 1
