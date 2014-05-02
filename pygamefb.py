@@ -23,6 +23,8 @@ class pyscope :
       except pygame.error:
         print 'X failed.'
         #continue
+    else:
+      print "Well, there's no X."
         
 
     # Check which frame buffer drivers are available
@@ -31,7 +33,7 @@ class pyscope :
     for driver in drivers:
       if not found: #only try this if we don't already have a dpy
         # Make sure that SDL_VIDEODRIVER is set
-        print "Trying" + driver
+        print "Trying " + driver
         if not os.getenv('SDL_VIDEODRIVER'):
           os.putenv('SDL_VIDEODRIVER', driver)
         try:
