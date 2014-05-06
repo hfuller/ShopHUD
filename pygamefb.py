@@ -72,8 +72,20 @@ class pyscope :
     self.screen.fill(red)
     # Update the display
     pygame.display.update()
+    
+  def updateTime(self):
+    font = pygame.font.Font(None,120)
+    text = font.render("butts",1,(255,255,255))
+    textpos = text.get_rect()
+    screenrect = self.screen.get_rect()
+    textpos.centerx = screenrect.centerx
+    textpos.centery = screenrect.centery
+    self.screen.blit(text,textpos)
+    pygame.display.update()
+    #pygame.display.flip()
  
 # Create an instance of the PyScope class
 scope = pyscope()
-scope.test()
+#scope.test()
+scope.updateTime()
 time.sleep(10)
