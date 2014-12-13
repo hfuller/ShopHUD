@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 import os
+import sys
 import pygame
 import time
 import random
@@ -75,12 +77,40 @@ class pyscope :
     
   def updateTime(self):
     font = pygame.font.Font(None,120)
-    text = font.render("butts",1,(255,255,255))
-    textpos = text.get_rect()
+    
+    #text = font.render(str(" ".join(sys.argv[1:])),1,(255,255,255))
+    #textpos = text.get_rect()
+    #screenrect = self.screen.get_rect()
+    #textpos.centerx = screenrect.centerx
+    #textpos.centery = screenrect.centery
+    #textpos.top = 0
+    #self.screen.blit(text,textpos)
+    
+    i = 1
+    j = 0
+    lines = []
+    tmp = ""
+    while i < len(sys.argv):
+        if (i-1)%3 == 0 and len(tmp) > 0:
+            lines.append(tmp)
+            tmp = sys.argv[i]
+            j = j+1
+        else:
+            tmp += " " + sys.argv[i]
+        i = i + 1
+        if i == len(sys.argv):
+            lines.append(tmp)
+
     screenrect = self.screen.get_rect()
-    textpos.centerx = screenrect.centerx
-    textpos.centery = screenrect.centery
-    self.screen.blit(text,textpos)
+    y = screenrect.top
+    for line in lines:
+        text = font.render(line,1,(255,255,255))
+        textpos = text.get_rect()
+        textpos.centerx = screenrect.centerx
+        textpos.top = y
+        self.screen.blit(text,textpos)
+        y = textpos.bottom
+    
     pygame.display.update()
     #pygame.display.flip()
  
