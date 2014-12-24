@@ -1,2 +1,8 @@
 Possible way to power save:
 setterm -powersave powerdown -powerdown 1
+
+Possible sites to use:
+Makers cameras.
+http://www.nsstc.uah.edu/mips/data/webcam/
+http://jackf.net/bezier-clock/
+
